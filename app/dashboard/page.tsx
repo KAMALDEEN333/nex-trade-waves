@@ -31,6 +31,8 @@ import {
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
+import { WalletConnect } from "@/components/wallet/wallet-connect"
+import { BasecoinWalletHeader } from "@/components/wallet/basecoin-wallet-header"
 
 export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState("")
@@ -70,346 +72,227 @@ export default function DashboardPage() {
     },
   ]
 
-  const cryptoHoldings = [
-    {
-      name: "Bitcoin",
-      symbol: "BTC",
-      amount: "2.45",
-      value: "$105,862.50",
-      change: "+2.45%",
-      price: "$43,250.00",
-      allocation: 84,
-    },
-    {
-      name: "Ethereum",
-      symbol: "ETH",
-      amount: "5.67",
-      value: "$15,194.84",
-      change: "+1.82%",
-      price: "$2,680.50",
-      allocation: 12,
-    },
-    {
-      name: "Solana",
-      symbol: "SOL",
-      amount: "25.3",
-      value: "$2,498.78",
-      change: "+5.23%",
-      price: "$98.75",
-      allocation: 2,
-    },
-    {
-      name: "Cardano",
-      symbol: "ADA",
-      amount: "4,567",
-      value: "$2,374.84",
-      change: "-0.95%",
-      price: "$0.52",
-      allocation: 2,
-    },
-  ]
-
   const recentTrades = [
     {
-      pair: "BTC/USDT",
+      pair: "ETH/USDC",
       type: "Buy",
-      amount: "0.125",
-      price: "$43,180.00",
-      total: "$5,397.50",
+      amount: "2.5 ETH",
+      value: "$5,420.00",
       time: "2 min ago",
       status: "Completed",
     },
     {
-      pair: "ETH/USDT",
+      pair: "BTC/USDC",
       type: "Sell",
-      amount: "1.5",
-      price: "$2,675.30",
-      total: "$4,012.95",
+      amount: "0.1 BTC",
+      value: "$4,320.50",
       time: "15 min ago",
       status: "Completed",
     },
     {
-      pair: "SOL/USDT",
+      pair: "SOL/USDC",
       type: "Buy",
-      amount: "10",
-      price: "$98.45",
-      total: "$984.50",
+      amount: "15 SOL",
+      value: "$1,475.25",
       time: "1 hour ago",
+      status: "Completed",
+    },
+    {
+      pair: "AVAX/USDC",
+      type: "Sell",
+      amount: "8 AVAX",
+      value: "$86.40",
+      time: "2 hours ago",
       status: "Completed",
     },
   ]
 
-  const marketData = [
-    { name: "Bitcoin", symbol: "BTC", price: "$43,250.00", change: "+2.45%", volume: "$28.5B" },
-    { name: "Ethereum", symbol: "ETH", price: "$2,680.50", change: "+1.82%", volume: "$15.2B" },
-    { name: "Solana", symbol: "SOL", price: "$98.75", change: "+5.23%", volume: "$2.1B" },
-    { name: "Cardano", symbol: "ADA", price: "$0.52", change: "-0.95%", volume: "$890M" },
+  const watchlist = [
+    { name: "Ethereum", symbol: "ETH", price: "$2,168.00", change: "+2.45%", icon: "🔷" },
+    { name: "Bitcoin", symbol: "BTC", price: "$43,250.00", change: "+1.82%", icon: "🔶" },
+    { name: "Solana", symbol: "SOL", price: "$98.75", change: "+5.23%", icon: "🟢" },
+    { name: "Avalanche", symbol: "AVAX", price: "$10.80", change: "-0.95%", icon: "🔺" },
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50/30 to-orange-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50">
       {/* Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-amber-600 to-orange-600 rounded-lg flex items-center justify-center">
-                  <BarChart3 className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gray-900">Nex Trade Wave 🌊</span>
-              </Link>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input
-                  placeholder="Search markets..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 w-64"
-                />
-              </div>
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-amber-600 to-orange-600 rounded-lg flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-white" />
             </div>
+            <span className="text-xl font-bold text-gray-900">Nex Trade Wave 🌊</span>
+          </div>
 
-            <div className="flex items-center space-x-4">
-              <Button
-                variant="outline"
-                size="sm"
-                className="bg-amber-600 hover:bg-amber-700 text-white border-amber-600"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Deposit
-              </Button>
-
-              <Button variant="ghost" size="sm">
-                <Bell className="w-5 h-5" />
-              </Button>
-
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src="/placeholder.svg?height=32&width=32" alt="User" />
-                      <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">John Doe</p>
-                      <p className="text-xs leading-none text-muted-foreground">john@example.com</p>
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Profile</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Wallet className="mr-2 h-4 w-4" />
-                    <span>Wallet</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Settings</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <Link href="/signin">Sign out</Link>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+          <div className="flex-1 max-w-md mx-8">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                type="search"
+                placeholder="Search markets, tokens..."
+                className="pl-10 pr-4 py-2 bg-white/50 border-amber-200 focus:border-amber-300 focus:ring-amber-300"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
             </div>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            {/* Basecoin Wallet Header */}
+            <BasecoinWalletHeader />
+            
+            <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900">
+              <Bell className="w-5 h-5" />
+            </Button>
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="/avatars/01.png" alt="@user" />
+                    <AvatarFallback>U</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">User</p>
+                    <p className="text-xs leading-none text-muted-foreground">user@example.com</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* Welcome Section */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Welcome back, John!</h1>
-              <p className="text-gray-600 mt-1">Here's your trading overview for today.</p>
-            </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-500">Market Status</p>
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <p className="text-lg font-semibold text-green-600">Open</p>
-              </div>
-            </div>
-          </div>
+      <main className="container mx-auto px-4 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, Trader!</h1>
+          <p className="text-gray-600">Monitor your portfolio and execute trades on Base network.</p>
+        </div>
 
-          {/* Portfolio Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {portfolioStats.map((stat, index) => (
-              <Card key={index} className="border-0 shadow-sm">
+        {/* Portfolio Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {portfolioStats.map((stat, index) => {
+            const Icon = stat.icon
+            return (
+              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-600">{stat.title}</CardTitle>
-                  <stat.icon className={`h-4 w-4 ${stat.color}`} />
+                  <CardTitle className="text-sm font-medium text-gray-500">{stat.title}</CardTitle>
+                  <Icon className={`h-4 w-4 ${stat.color}`} />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-                  <div className="flex items-center space-x-1">
+                  <div className={`text-xs flex items-center ${stat.trend === "up" ? "text-green-600" : "text-red-600"}`}>
                     {stat.trend === "up" ? (
-                      <ArrowUpRight className="w-3 h-3 text-green-600" />
+                      <ArrowUpRight className="h-3 w-3 mr-1" />
                     ) : (
-                      <ArrowDownRight className="w-3 h-3 text-red-600" />
+                      <ArrowDownRight className="h-3 w-3 mr-1" />
                     )}
-                    <p className={`text-xs font-medium ${stat.trend === "up" ? "text-green-600" : "text-red-600"}`}>
-                      {stat.change} today
-                    </p>
+                    {stat.change}
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )
+          })}
+        </div>
+
+        {/* Charts and Recent Activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Chart */}
+          <div className="lg:col-span-2">
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle>Portfolio Performance</CardTitle>
+                <CardDescription>Your trading performance over the last 30 days</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="h-80 flex items-center justify-center bg-gradient-to-r from-amber-100 to-orange-100 rounded-lg">
+                  <div className="text-center">
+                    <BarChart3 className="w-12 h-12 text-amber-600 mx-auto mb-4" />
+                    <p className="text-gray-600">Portfolio chart visualization</p>
+                    <p className="text-sm text-gray-500 mt-2">Interactive chart showing your Base network trading performance</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Main Dashboard Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Portfolio Holdings */}
-            <div className="lg:col-span-2">
-              <Card className="border-0 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="flex items-center justify-between">
-                    Portfolio Holdings
-                    <Button variant="ghost" size="sm">
-                      View All
-                    </Button>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {cryptoHoldings.map((holding, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-amber-50 rounded-lg">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
-                          <span className="text-white font-bold text-sm">{holding.symbol.slice(0, 2)}</span>
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-gray-900">{holding.name}</h3>
-                          <p className="text-sm text-gray-600">
-                            {holding.amount} {holding.symbol}
-                          </p>
-                        </div>
+          {/* Recent Activity */}
+          <div>
+            <Card className="border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle>Recent Trades</CardTitle>
+                <CardDescription>Latest transactions on Base network</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recentTrades.map((trade, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-amber-50 transition-colors">
+                      <div>
+                        <div className="font-medium text-gray-900">{trade.pair}</div>
+                        <div className="text-sm text-gray-500">{trade.time}</div>
                       </div>
                       <div className="text-right">
-                        <p className="font-semibold text-gray-900">{holding.value}</p>
-                        <div className="flex items-center space-x-2">
-                          <p
-                            className={`text-sm ${holding.change.startsWith("+") ? "text-green-600" : "text-red-600"}`}
-                          >
-                            {holding.change}
-                          </p>
-                          <div className="w-16 bg-gray-200 rounded-full h-2">
-                            <div
-                              className="bg-amber-600 h-2 rounded-full"
-                              style={{ width: `${holding.allocation}%` }}
-                            ></div>
-                          </div>
+                        <div className={`font-medium ${trade.type === "Buy" ? "text-green-600" : "text-red-600"}`}>
+                          {trade.type} {trade.amount}
                         </div>
+                        <div className="text-sm text-gray-500">{trade.value}</div>
                       </div>
                     </div>
                   ))}
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Market Overview */}
-            <div>
-              <Card className="border-0 shadow-sm">
-                <CardHeader>
-                  <CardTitle>Market Overview</CardTitle>
-                  <CardDescription>Top cryptocurrencies by market cap</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {marketData.map((crypto, index) => (
-                    <div key={index} className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
-                          <span className="text-white font-bold text-xs">{crypto.symbol.slice(0, 2)}</span>
-                        </div>
-                        <div>
-                          <p className="font-medium text-gray-900">{crypto.symbol}</p>
-                          <p className="text-xs text-gray-500">{crypto.volume}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-gray-900">{crypto.price}</p>
-                        <p className={`text-xs ${crypto.change.startsWith("+") ? "text-green-600" : "text-red-600"}`}>
-                          {crypto.change}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
+        </div>
 
-          {/* Trading Activity */}
-          <Card className="border-0 shadow-sm">
+        {/* Watchlist */}
+        <div className="mt-8">
+          <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle>Recent Trades</CardTitle>
+              <CardTitle>Watchlist</CardTitle>
+              <CardDescription>Track your favorite tokens on Base network</CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="trades" className="w-full">
-                <TabsList className="grid w-full grid-cols-4">
-                  <TabsTrigger value="trades">Recent Trades</TabsTrigger>
-                  <TabsTrigger value="orders">Open Orders</TabsTrigger>
-                  <TabsTrigger value="history">Trade History</TabsTrigger>
-                  <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                </TabsList>
-                <TabsContent value="trades" className="space-y-4 mt-6">
-                  <div className="space-y-3">
-                    {recentTrades.map((trade, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <div className="flex items-center space-x-4">
-                          <Badge
-                            variant={trade.type === "Buy" ? "default" : "secondary"}
-                            className={trade.type === "Buy" ? "bg-green-600 text-white" : "bg-red-600 text-white"}
-                          >
-                            {trade.type}
-                          </Badge>
-                          <div>
-                            <p className="font-medium text-gray-900">{trade.pair}</p>
-                            <p className="text-sm text-gray-600">
-                              {trade.amount} @ {trade.price}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-semibold text-gray-900">{trade.total}</p>
-                          <p className="text-sm text-gray-500">{trade.time}</p>
-                        </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {watchlist.map((token, index) => (
+                  <div key={index} className="flex items-center justify-between p-4 rounded-lg border border-amber-200 hover:bg-amber-50 transition-colors">
+                    <div className="flex items-center space-x-3">
+                      <span className="text-2xl">{token.icon}</span>
+                      <div>
+                        <div className="font-medium text-gray-900">{token.name}</div>
+                        <div className="text-sm text-gray-500">{token.symbol}</div>
                       </div>
-                    ))}
+                    </div>
+                    <div className="text-right">
+                      <div className="font-medium text-gray-900">{token.price}</div>
+                      <div className={`text-sm ${token.change.startsWith("+") ? "text-green-600" : "text-red-600"}`}>
+                        {token.change}
+                      </div>
+                    </div>
                   </div>
-                </TabsContent>
-                <TabsContent value="orders" className="mt-6">
-                  <div className="text-center py-8">
-                    <Activity className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No Open Orders</h3>
-                    <p className="text-gray-600">You don't have any open orders at the moment.</p>
-                  </div>
-                </TabsContent>
-                <TabsContent value="history" className="mt-6">
-                  <div className="text-center py-8">
-                    <BarChart3 className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Trade History</h3>
-                    <p className="text-gray-600">View your complete trading history and performance.</p>
-                  </div>
-                </TabsContent>
-                <TabsContent value="analytics" className="mt-6">
-                  <div className="text-center py-8">
-                    <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Trading Analytics</h3>
-                    <p className="text-gray-600">Detailed analytics and performance metrics coming soon.</p>
-                  </div>
-                </TabsContent>
-              </Tabs>
+                ))}
+              </div>
             </CardContent>
           </Card>
         </div>
