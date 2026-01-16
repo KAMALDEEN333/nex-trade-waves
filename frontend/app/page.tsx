@@ -7,7 +7,7 @@ import { ArrowRight, Shield, Zap, Globe, BarChart3, Wallet } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { WalletConnect } from "@/components/wallet/wallet-connect"
-import { BasecoinWalletModal } from "@/components/wallet/basecoin-wallet-modal"
+import { StellarWalletModal } from "@/components/wallet/stellar-wallet-modal"
 import { useState } from "react"
 import { Providers } from "@/components/providers"
 
@@ -53,14 +53,14 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24">
         <div className="max-w-4xl mx-auto text-center">
-          <Badge variant="secondary" className="mb-4 bg-amber-100 text-amber-800">
-            Built on Base Network
-          </Badge>
+          {/* <Badge variant="secondary" className="mb-4 bg-amber-100 text-amber-800">
+            Built on Stellar Network
+          </Badge> */}
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Trade Crypto with <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600">Lightning Speed</span>
           </h1>
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            Experience the future of decentralized trading on Base network. Low fees, high security, and instant transactions.
+            Experience the future of decentralized trading on Stellar network. Low fees, high security, and instant transactions.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button 
@@ -69,7 +69,7 @@ export default function HomePage() {
               onClick={() => setIsWalletModalOpen(true)}
             >
               <Wallet className="w-5 h-5 mr-2" />
-              Connect Base Wallet
+              Connect Stellar Wallet
             </Button>
             <Button 
               size="lg" 
@@ -88,9 +88,9 @@ export default function HomePage() {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Trade on Base Network?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Trade on Stellar Network?</h2>
           <p className="text-gray-600">
-            Our platform leverages the power of Base for fast, secure, and low-cost cryptocurrency trading.
+            Our platform leverages the power of Stellar for fast, secure, and low-cost cryptocurrency trading.
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export default function HomePage() {
                 <Zap className="w-6 h-6 text-green-600" />
               </div>
               <CardTitle>Lightning Fast</CardTitle>
-              <CardDescription>Execute trades in seconds with Base network's high-speed transactions.</CardDescription>
+              <CardDescription>Execute trades in seconds with Stellar network's high-speed transactions.</CardDescription>
             </CardHeader>
           </Card>
           <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
@@ -132,7 +132,7 @@ export default function HomePage() {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Market Overview</h2>
           <p className="text-gray-600">
-            Real-time prices for top cryptocurrencies on Base network.
+            Real-time prices for top cryptocurrencies on Stellar network.
           </p>
         </div>
 
@@ -161,7 +161,7 @@ export default function HomePage() {
         <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-8 md:p-12 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Ready to Start Trading?</h2>
           <p className="text-amber-100 text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of traders who trust Nex Trade Wave for their crypto transactions on Base network.
+            Join thousands of traders who trust Nex Trade Wave for their crypto transactions on Stellar network.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button 
@@ -199,7 +199,7 @@ export default function HomePage() {
                 <span className="text-xl font-bold text-gray-900">Nex Trade Wave 🌊</span>
               </div>
               <p className="text-gray-600 mb-4">
-                The next generation of decentralized cryptocurrency trading on Base network.
+                The next generation of decentralized cryptocurrency trading on Stellar network.
               </p>
               <div className="flex space-x-4">
                 <div className="w-8 h-8 bg-gray-200 rounded-full"></div>
@@ -236,13 +236,13 @@ export default function HomePage() {
             </div>
           </div>
           <div className="border-t mt-8 pt-8 text-center text-gray-600">
-            <p>&copy; 2025 Nex Trade Wave. All rights reserved. Built on Base network.</p>
+            <p>&copy; 2025 Nex Trade Wave. All rights reserved. Built on Stellar network.</p>
           </div>
         </div>
       </footer>
 
-      {/* Basecoin Wallet Modal */}
-      <BasecoinWalletModal open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen} />
+      {/* Stellar Wallet Modal */}
+      <StellarWalletModal open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen} />
     </div>
   )
 }

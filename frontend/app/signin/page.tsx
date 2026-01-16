@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Wallet, Shield, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
-import { BasecoinWalletModal } from "@/components/wallet/basecoin-wallet-modal"
+import { StellarWalletModal } from "@/components/wallet/stellar-wallet-modal"
 import { apiService, LoginDto, ApiError } from "@/lib/api"
 import {
   Dialog,
@@ -154,22 +154,14 @@ export default function SignInPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Wallet Connect Options */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex justify-center">
               <Button
                 variant="outline"
-                className="w-full bg-white/50 border-amber-200 hover:bg-amber-50 hover:border-amber-300 transition-all"
+                className="w-full max-w-xs bg-white/50 border-amber-200 hover:bg-amber-50 hover:border-amber-300 transition-all"
                 onClick={() => setIsWalletModalOpen(true)}
               >
                 <Wallet className="w-4 h-4 mr-2" />
-                Base Wallet
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full bg-white/50 border-amber-200 hover:bg-amber-50 hover:border-amber-300 transition-all"
-                onClick={() => setIsWalletModalOpen(true)}
-              >
-                <Shield className="w-4 h-4 mr-2" />
-                Coinbase
+                Stellar (Freighter)
               </Button>
             </div>
 
@@ -303,13 +295,13 @@ export default function SignInPage() {
         <div className="mt-6 p-4 bg-amber-100 rounded-lg border border-amber-200">
           <div className="flex items-center space-x-2 text-amber-800">
             <Shield className="w-4 h-4" />
-            <span className="text-sm font-medium">Your funds are secured by Base network technology</span>
+            <span className="text-sm font-medium">Your funds are secured by Stellar network technology</span>
           </div>
         </div>
       </div>
 
-      {/* Basecoin Wallet Modal */}
-      <BasecoinWalletModal open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen} />
+      {/* Stellar Wallet Modal */}
+      <StellarWalletModal open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen} />
       {/* Full-screen loader while signing in */}
       {isLoading && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">

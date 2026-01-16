@@ -32,7 +32,7 @@ import {
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
 import { WalletConnect } from "@/components/wallet/wallet-connect"
-import { BasecoinWalletHeader } from "@/components/wallet/basecoin-wallet-header"
+import { StellarWalletHeader } from "@/components/wallet/stellar-wallet-header"
 import { apiService } from "@/lib/api"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
@@ -286,8 +286,8 @@ export default function DashboardPage() {
           </div>
 
           <div className="flex items-center space-x-4">
-            {/* Basecoin Wallet Header */}
-            <BasecoinWalletHeader />
+            {/* Stellar Wallet Header */}
+            <StellarWalletHeader />
             
             <Button variant="ghost" size="icon" className="text-gray-600 hover:text-gray-900">
               <Bell className="w-5 h-5" />
@@ -333,7 +333,7 @@ export default function DashboardPage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome back, {user?.name || "Trader"}!</h1>
-          <p className="text-gray-600">Monitor your portfolio and execute trades on Base network.</p>
+          <p className="text-gray-600">Monitor your portfolio and execute trades on Stellar network.</p>
         </div>
 
         {/* Portfolio Stats */}

@@ -6,9 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Wallet, Shield, Eye, EyeOff, Check } from "lucide-react"
+import { Wallet, Eye, EyeOff, Check } from "lucide-react"
 import Link from "next/link"
-import { BasecoinWalletModal } from "@/components/wallet/basecoin-wallet-modal"
+import { StellarWalletModal } from "@/components/wallet/stellar-wallet-modal"
 import { apiService, RegisterDto } from "@/lib/api"
 import { useToast } from "@/hooks/use-toast"
 import { useRouter } from "next/navigation"
@@ -104,7 +104,7 @@ export default function SignUpPage() {
             <Wallet className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">Create Account</h1>
-          <p className="text-gray-600">Join the future of cryptocurrency trading on Base network</p>
+          <p className="text-gray-600">Join the future of cryptocurrency trading</p>
         </div>
 
         <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
@@ -123,23 +123,9 @@ export default function SignUpPage() {
                 onClick={() => setIsWalletModalOpen(true)}
               >
                 <Wallet className="w-4 h-4 mr-2" />
-                Base Wallet
+                Stellar (Freighter)
               </Button>
-              <Button
-                variant="outline"
-                className="w-full bg-white/50 border-amber-200 hover:bg-amber-50 hover:border-amber-300 transition-all"
-                onClick={() => setIsWalletModalOpen(true)}
-              >
-                <Shield className="w-4 h-4 mr-2" />
-                Coinbase
-              </Button>
-            </div>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <Separator className="bg-amber-200" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
+              <div className="flex items-center justify-center">
                 <span className="bg-white px-3 text-gray-500 font-medium">Or create with email</span>
               </div>
             </div>
@@ -265,14 +251,14 @@ export default function SignUpPage() {
 
         <div className="mt-6 p-4 bg-amber-100 rounded-lg border border-amber-200">
           <div className="flex items-center space-x-2 text-amber-800">
-            <Shield className="w-4 h-4" />
-            <span className="text-sm font-medium">Your funds are secured by Base network technology</span>
+            {/* <Shield className="w-4 h-4" /> */}
+            <span className="text-sm font-medium">Your funds are secured by Stellar network technology</span>
           </div>
         </div>
       </div>
 
-      {/* Basecoin Wallet Modal */}
-      <BasecoinWalletModal open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen} />
+      {/* Stellar Wallet Modal */}
+      <StellarWalletModal open={isWalletModalOpen} onOpenChange={setIsWalletModalOpen} />
     </div>
   )
 }
